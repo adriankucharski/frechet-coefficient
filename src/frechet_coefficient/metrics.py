@@ -132,11 +132,11 @@ class ImageSimilarityMetrics(PretrainedModelWrapper):
         hd = hellinger_distance(mean1, cov1, mean2, cov2)
         return hd
 
-    def calculate_fd_with_mu_sigma(self, mean1: np.ndarray, cov1: np.ndarray, mean2: np.ndarray, cov2: np.ndarray) -> float:
+    def calculate_fd_with_mean_cov(self, mean1: np.ndarray, cov1: np.ndarray, mean2: np.ndarray, cov2: np.ndarray) -> float:
         return frechet_distance(mean1, cov1, mean2, cov2)
 
-    def calculate_fc_with_mu_sigma(self, mean1: np.ndarray, cov1: np.ndarray, mean2: np.ndarray, cov2: np.ndarray) -> float:
+    def calculate_fc_with_mean_cov(self, mean1: np.ndarray, cov1: np.ndarray, mean2: np.ndarray, cov2: np.ndarray) -> float:
         return frechet_coefficient(mean1, cov1, mean2, cov2)
 
-    def calculate_hd_with_mu_sigma(self, mean1: np.ndarray, cov1: np.ndarray, mean2: np.ndarray, cov2: np.ndarray) -> float:
+    def calculate_hd_with_mean_cov(self, mean1: np.ndarray, cov1: np.ndarray, mean2: np.ndarray, cov2: np.ndarray) -> float:
         return hellinger_distance(mean1, cov1, mean2, cov2)

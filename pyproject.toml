@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "frechet-coefficient"
-version = "1.0.5"
+version = "1.0.0"
 dependencies = [
     "numpy~=1.26.2", 
     "imageio~=2.33.1",
