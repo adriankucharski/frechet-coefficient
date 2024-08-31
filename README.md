@@ -22,15 +22,17 @@ pip install frechet-coefficient
 You can use the command-line interface (CLI) to calculate similarity metrics between two directories of images.
 
 ```sh
-frechet-coefficient --dir1 <path_to_directory1> --dir2 <path_to_directory2> --metric <metric> [options]
+frechet-coefficient <path_to_directory1> <path_to_directory2> --metric <metric> [options]
 ```
 
 Remember to use enough images to get a meaningful result. If your datasets are small, consider using `--random_patches` argument to calculate metrics on random patches of images.
 
+### Positional Arguments
+- `dir1`: Path to the first directory of images.
+- `dir2`: Path to the second directory of images.
+
 ### Options
 
-- `--dir1`: Path to the first directory of images.
-- `--dir2`: Path to the second directory of images.
 - `--metric`: Metric to calculate (fd, fc, hd).
 - `--batch_size`: Batch size for processing images.
 - `--num_of_images`: Number of images to load from each directory.
@@ -41,22 +43,24 @@ Remember to use enough images to get a meaningful result. If your datasets are s
 - `--model`: Pre-trained model to use as feature extractor (inceptionv3, resnet50v2, xception, densenet201, convnexttiny, efficientnetv2s).
 - `--verbose`: Enable verbose output.
 
-### Example
+### Example CLI Commands
 
 To calculate the Frechet Distance between two sets of images, use the following command:
 ```sh
-frechet-coefficient --dir1 images/set1 --dir2 images/set2 --metric fd
+frechet-coefficient images/set1 images/set2 --metric fd
 ```
 
 To calculate the Frechet Coefficient between two sets of images using the InceptionV3 model, use the following command:
 ```sh
-frechet-coefficient --dir1 images/set1 --dir2 images/set2 --metric fc --model inceptionv3
+frechet-coefficient images/set1 images/set2 --metric fc --model inceptionv3
 ```
 
 To calculate the Hellinger Distance between two sets of images using random patches, use the following command:
 ```sh
-frechet-coefficient --dir1 images/set1 --dir2 images/set2 --metric hd --random_patches --patch_size 128 --num_of_patch 10000
+frechet-coefficient images/set1 images/set2 --metric hd --random_patches --patch_size 128 --num_of_patch 10000
 ```
+S
+### Python Code
 
 You can also use python code to calculate similarity metrics between two sets of images.
 
