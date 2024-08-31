@@ -155,12 +155,7 @@ The Hellinger Distance is numerically unstable for small datasets. The main reas
 
 If you use this package in your research, please consider citing the following paper:
 
-```
-@article{paper,
-    title = {Towards Improved Evaluation of Generative Neural Networks: The Frechet Coefficient},
-    author = {Adrian Kucharski, Anna Fabija\'nska},
-}
-```
+- not available yet
 
 ## License
 

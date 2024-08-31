@@ -23,6 +23,9 @@ license = {file = "LICENSE"}
 keywords = ["frechet", "frechet-coefficient", "fid"]
 
 [project.urls]
+Homepage = "https://github.com/adriankucharski/frechet-coefficient"
+Documentation = "https://github.com/adriankucharski/frechet-coefficient"
+Repository = "https://github.com/adriankucharski/frechet-coefficient"
 
 [project.scripts]
 frechet-coefficient = "frechet_coefficient.cli:main"
