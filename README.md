@@ -20,9 +20,9 @@ pip install frechet-coefficient
 
 Requirements:
 - Python 3.11
-- TensorFlow 2.16.1
-- numpy 1.26.2
-- imageio 2.33.1
+- TensorFlow 2.16.*
+- numpy 1.26.*
+- imageio 2.33.*
 
 ## Usage
 
