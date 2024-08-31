@@ -115,8 +115,8 @@ images_1: List[np.ndarray] | np.ndarray = ... # shape: (num_of_images, height, w
 images_2: List[np.ndarray] | np.ndarray = ... # shape: (num_of_images, height, width, channels)
 
 # Crop random patches from images
-images_1_patches = crop_random_patches(images_1, patch_size=(128, 128), num_of_patch=10000)
-images_2_patches = crop_random_patches(images_2, patch_size=(128, 128), num_of_patch=10000)
+images_1_patches = crop_random_patches(images_1, size=(128, 128), num_of_patch=10000)
+images_2_patches = crop_random_patches(images_2, size=(128, 128), num_of_patch=10000)
 
 # Calculate Frechet Distance
 fd = ism.calculate_frechet_distance(images_1_patches, images_2_patches, batch_size=4)

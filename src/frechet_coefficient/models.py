@@ -1,3 +1,8 @@
+import os
+
+# Disable TensorFlow logging
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
+
 from typing import List, Literal
 
 import numpy as np

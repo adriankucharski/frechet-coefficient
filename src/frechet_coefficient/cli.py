@@ -5,9 +5,6 @@ This module contains the CLI for the Frechet Coefficient. We can calculate the F
 import argparse
 import os
 
-# Disable TensorFlow logging
-os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
-
 from frechet_coefficient.metrics import ImageSimilarityMetrics
 from frechet_coefficient.utils import crop_random_patches, load_images
 
