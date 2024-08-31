@@ -1,4 +1,3 @@
-```markdown
 # Frechet Coefficient
 
 Frechet Coefficient is a Python package for calculating various similarity metrics between images, including Frechet Distance, Frechet Coefficient, and Hellinger Distance. It leverages pre-trained models from TensorFlow's Keras applications to extract features from images.
@@ -86,4 +85,3 @@ The Hellinger Distance is numerically unstable for small datasets. The main reas
 ## License
 
 This project is licensed under the MIT License. See the [`LICENSE`] file for details.
-```
