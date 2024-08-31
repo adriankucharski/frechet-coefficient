@@ -74,13 +74,13 @@ You can also use python code to calculate similarity metrics between two sets of
 ```python
 import numpy as np
 from typing import List
-from frechet_coefficient import ImageSimilarityMetrics
+from frechet_coefficient import ImageSimilarityMetrics, load_images
 
 # Initialize the ImageSimilarityMetrics class
 ism = ImageSimilarityMetrics(model='inceptionv3', verbose=0)
 
-images_1: List[np.ndarray] | np.ndarray = ... # shape: (num_of_images, height, width, channels)
-images_2: List[np.ndarray] | np.ndarray = ... # shape: (num_of_images, height, width, channels)
+images_1: List[np.ndarray] = load_images(path=...) # shape: (num_of_images, height, width, channels)
+images_2: List[np.ndarray] = load_images(path=...) # shape: (num_of_images, height, width, channels)
 
 # Calculate Frechet Distance
 fd = ism.calculate_frechet_distance(images_1, images_2, batch_size=4)
@@ -105,14 +105,13 @@ You can also calculate similarity metrics between two sets of images using rando
 ```python
 import numpy as np
 from typing import List
-from frechet_coefficient import ImageSimilarityMetrics
-from frechet_coefficient import crop_random_patches
+from frechet_coefficient import ImageSimilarityMetrics, crop_random_patches, load_images
 
 # Initialize the ImageSimilarityMetrics class
 ism = ImageSimilarityMetrics(model='inceptionv3', verbose=0)
 
-images_1: List[np.ndarray] | np.ndarray = ... # shape: (num_of_images, height, width, channels)
-images_2: List[np.ndarray] | np.ndarray = ... # shape: (num_of_images, height, width, channels)
+images_1: List[np.ndarray] = load_images(path=...) # shape: (num_of_images, height, width, channels)
+images_2: List[np.ndarray] = load_images(path=...) # shape: (num_of_images, height, width, channels)
 
 # Crop random patches from images
 images_1_patches = crop_random_patches(images_1, size=(128, 128), num_of_patch=10000)
