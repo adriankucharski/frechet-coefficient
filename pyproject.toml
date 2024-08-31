@@ -1,0 +1,48 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "frechet-coefficient"
+version = "1.0.5"
+dependencies = [
+    "numpy~=1.26.2", 
+    "imageio~=2.33.1",
+    "tensorflow[and-cuda]~=2.16.1",
+]
+requires-python = ">=3.11,<3.12"
+authors = [
+    {name = "Adrian Kucharski"}
+]
+maintainers = [
+    {name = "Adrian Kucharski"}
+]
+description = "Frechet Coefficient"
+readme = "README.md"
+license = {file = "LICENSE"}
+keywords = ["frechet", "frechet-coefficient", "fid"]
+
+[project.urls]
+
+[project.scripts]
+frechet-coefficient = "frechet_coefficient.cli:main"
+
+[tool.ruff]
+line-length = 150
+indent-width = 4
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]
+ignore = []
+fixable = ["ALL"]
+unfixable = []
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = true
+docstring-code-line-length = 30
