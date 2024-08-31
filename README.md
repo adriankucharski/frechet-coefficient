@@ -7,6 +7,7 @@ Frechet Coefficient is a Python package for calculating various similarity metri
 - [Installation](#installation)
 - [Usage](#usage)
 - [Features](#features)
+- [Citation](#citation)
 - [License](#license)
 
 ## Installation
@@ -16,6 +17,12 @@ To install the package, use the following command:
 ```sh
 pip install frechet-coefficient
 ```
+
+Requirements:
+- Python 3.11
+- TensorFlow 2.16.1
+- numpy 1.26.2
+- imageio 2.33.1
 
 ## Usage
 
@@ -143,6 +150,17 @@ The Hellinger Distance is numerically unstable for small datasets. The main reas
 - Calculate Frechet Distance, Frechet Coefficient, and Hellinger Distance between two sets of images.
 - Support for multiple pre-trained models.
 - Option to calculate metrics on random patches of images. 
+
+## Citation
+
+If you use this package in your research, please consider citing the following paper:
+
+```
+@article{paper,
+    title = {Towards Improved Evaluation of Generative Neural Networks: The Frechet Coefficient},
+    author = {Adrian Kucharski, Anna Fabija\'nska},
+}
+```
 
 ## License
 
