@@ -66,7 +66,7 @@ To calculate the Hellinger Distance between two sets of images using random patc
 ```sh
 frechet-coefficient images/set1 images/set2 --metric hd --random_patches --patch_size 128 --num_of_patch 10000
 ```
-S
+
 ### Python Code
 
 You can also use python code to calculate similarity metrics between two sets of images.
