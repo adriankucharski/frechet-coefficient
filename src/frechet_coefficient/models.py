@@ -61,6 +61,15 @@ class PretrainedModelWrapper:
             "efficientnetv2s",
         ] = "inceptionv3",
     ) -> None:
+        """
+        Initializes the model object.
+
+        Args:
+            model (str, optional): The name of the model to use. Defaults to "inceptionv3".
+
+        Raises:
+            ValueError: If the specified model is not found.
+        """
         if not isinstance(model, str) or model.lower() not in MODELS_SPEC:
             raise ValueError(f"Model {model} not found")
 
@@ -74,6 +83,20 @@ class PretrainedModelWrapper:
         )
 
     def _preprocess(self, images: List[np.ndarray] | np.ndarray, batch_size: int = 4) -> tf.data.Dataset:
+        """
+        Preprocesses the input images for the model.
+
+        Args:
+            images (List[np.ndarray] | np.ndarray): The input images to be preprocessed.
+            batch_size (int, optional): The batch size for the dataset. Defaults to 4.
+
+        Returns:
+            tf.data.Dataset: The preprocessed dataset.
+
+        Raises:
+            ValueError: If the model path is not a string or not found in MODELS_SPEC.
+            ValueError: If the input data is not in the range [0, 1].
+        """
         if not isinstance(self.model_path, str) or self.model_path.lower() not in MODELS_SPEC:
             raise ValueError("Model not found")
 

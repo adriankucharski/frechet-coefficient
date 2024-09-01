@@ -7,6 +7,16 @@ from frechet_coefficient.models import PretrainedModelWrapper
 
 
 def calculate_mean_cov(features: np.ndarray, dtype=np.float64) -> Tuple[np.ndarray, np.ndarray]:
+    """
+    Calculate the mean and covariance of the given features.
+
+    Args:
+        features (np.ndarray): The input features as a 2D array.
+        dtype (type, optional): The data type of the output arrays. Defaults to np.float64.
+
+    Returns:
+        Tuple[np.ndarray, np.ndarray]: A tuple containing the mean and covariance arrays.
+    """
     if features.ndim != 2:
         logging.error(f"Features must be 2D array, but got {features.ndim}D array")
         raise ValueError("Features must be 2D array")
@@ -24,6 +34,26 @@ def calculate_mean_cov(features: np.ndarray, dtype=np.float64) -> Tuple[np.ndarr
 
 
 def frechet_distance(mean1: np.ndarray, cov1: np.ndarray, mean2: np.ndarray, cov2: np.ndarray) -> float:
+    """
+    Calculates the Frechet distance between two multivariate Gaussian distributions.
+
+    ## Note:
+    To improve the efficiency of the function, it calculates sum(sqrt(eigenvalues)) instead of calculating tr((cov1 @ cov2)^0.5) directly.
+
+    In other words: $\sum_{i=1}^{k} \sqrt{\lambda_i} = \text{tr}(A^{1/2})$
+
+    Parameters:
+        mean1 (np.ndarray): Mean vector of the first Gaussian distribution.
+        cov1 (np.ndarray): Covariance matrix of the first Gaussian distribution.
+        mean2 (np.ndarray): Mean vector of the second Gaussian distribution.
+        cov2 (np.ndarray): Covariance matrix of the second Gaussian distribution.
+
+    Returns:
+        float: The Frechet distance between the two Gaussian distributions.
+
+    Raises:
+        ValueError: If the shapes of mean1, mean2, cov1, and cov2 do not match.
+    """
     if not (mean1.shape == mean2.shape and cov1.shape == cov2.shape):
         logging.error(f"Shape mismatch: mean1={mean1.shape}, mean2={mean2.shape}, cov1={cov1.shape}, cov2={cov2.shape}")
         raise ValueError("Shape mismatch")
@@ -43,6 +73,22 @@ def frechet_distance(mean1: np.ndarray, cov1: np.ndarray, mean2: np.ndarray, cov
 
 
 def frechet_coefficient(mean1: np.ndarray, cov1: np.ndarray, mean2: np.ndarray, cov2: np.ndarray) -> float:
+    """
+    Calculates the Frechet coefficient between two multivariate Gaussian distributions.
+    To improve numerical stability pdeudo-inverse is used instead of the inverse of the covariance matrix.
+
+    Parameters:
+        mean1 (np.ndarray): Mean vector of the first Gaussian distribution.
+        cov1 (np.ndarray): Covariance matrix of the first Gaussian distribution.
+        mean2 (np.ndarray): Mean vector of the second Gaussian distribution.
+        cov2 (np.ndarray): Covariance matrix of the second Gaussian distribution.
+
+    Returns:
+        float: The Frechet coefficient between the two Gaussian distributions.
+
+    Raises:
+        ValueError: If the shapes of mean1, mean2, cov1, and cov2 do not match.
+    """
     if not (mean1.shape == mean2.shape and cov1.shape == cov2.shape):
         logging.error(f"Shape mismatch: mean1={mean1.shape}, mean2={mean2.shape}, cov1={cov1.shape}, cov2={cov2.shape}")
         raise ValueError("Shape mismatch")
@@ -66,6 +112,24 @@ def frechet_coefficient(mean1: np.ndarray, cov1: np.ndarray, mean2: np.ndarray, 
 
 
 def hellinger_distance(mean1: np.ndarray, cov1: np.ndarray, mean2: np.ndarray, cov2: np.ndarray) -> float:
+    """
+    Calculates the Hellinger distance between two multivariate Gaussian distributions.
+
+    ## Warning:
+    The Hellinger distance is numerically unstable when the covariance matrices are singular or poorly estimated. In such cases, the function may return NaN.
+
+    Parameters:
+        mean1 (np.ndarray): Mean vector of the first Gaussian distribution.
+        cov1 (np.ndarray): Covariance matrix of the first Gaussian distribution.
+        mean2 (np.ndarray): Mean vector of the second Gaussian distribution.
+        cov2 (np.ndarray): Covariance matrix of the second Gaussian distribution.
+
+    Returns:
+        float: The Hellinger distance between the two Gaussian distributions.
+
+    Raises:
+        ValueError: If the shapes of mean1, mean2, cov1, and cov2 do not match.
+    """
     if not (mean1.shape == mean2.shape and cov1.shape == cov2.shape):
         logging.error(f"Shape mismatch: mean1={mean1.shape}, mean2={mean2.shape}, cov1={cov1.shape}, cov2={cov2.shape}")
         raise ValueError("Shape mismatch")
@@ -100,10 +164,30 @@ class ImageSimilarityMetrics(PretrainedModelWrapper):
         ] = "inceptionv3",
         verbose: int = 1,
     ):
+        """
+        Initializes an instance of the Metrics class.
+        Args:
+            model (Literal["inceptionv3", "resnet50v2", "xception", "densenet201", "convnexttiny", "efficientnetv2s"], optional):
+                The name of the pre-trained model to use. Defaults to "inceptionv3".
+            verbose (int, optional):
+                Verbosity level. Defaults to 1.
+        Returns:
+            None
+        """
         PretrainedModelWrapper.__init__(self, model)
         self.verbose = verbose
 
     def derive_mean_cov(self, images: List[np.ndarray] | np.ndarray, batch_size: int = 4) -> Tuple[np.ndarray, np.ndarray]:
+        """
+        Calculates the mean and covariance of the given images.
+
+        Args:
+            images (List[np.ndarray] | np.ndarray): A list of images or a single image.
+            batch_size (int, optional): The batch size for processing the images. Defaults to 4.
+
+        Returns:
+            Tuple[np.ndarray, np.ndarray]: A tuple containing the mean and covariance of the features extracted from the images.
+        """
         images = self._preprocess(images, batch_size)
         features = self.model.predict(images, batch_size=batch_size, verbose=self.verbose)
         return calculate_mean_cov(features)
@@ -111,6 +195,18 @@ class ImageSimilarityMetrics(PretrainedModelWrapper):
     def calculate_frechet_distance(
         self, images_a: List[np.ndarray] | np.ndarray, images_b: List[np.ndarray] | np.ndarray, batch_size: int = 4
     ) -> float:
+        """
+        Calculates the Frechet distance between two sets of images.
+
+        Args:
+            images_a (List[np.ndarray] | np.ndarray): The first set of images.
+            images_b (List[np.ndarray] | np.ndarray): The second set of images.
+            batch_size (int, optional): The batch size for computing mean and covariance. Defaults to 4.
+
+        Returns:
+            float: The calculated Frechet distance.
+
+        """
         mean1, cov1 = self.derive_mean_cov(images_a, batch_size)
         mean2, cov2 = self.derive_mean_cov(images_b, batch_size)
         fd = frechet_distance(mean1, cov1, mean2, cov2)
@@ -119,6 +215,18 @@ class ImageSimilarityMetrics(PretrainedModelWrapper):
     def calculate_frechet_coefficient(
         self, images_a: List[np.ndarray] | np.ndarray, images_b: List[np.ndarray] | np.ndarray, batch_size: int = 4
     ) -> float:
+        """
+        Calculates the Frechet coefficient between two sets of images.
+
+        Args:
+            images_a (List[np.ndarray] | np.ndarray): The first set of images.
+            images_b (List[np.ndarray] | np.ndarray): The second set of images.
+            batch_size (int, optional): The batch size for computing mean and covariance. Defaults to 4.
+
+        Returns:
+            float: The calculated Frechet coefficient.
+
+        """
         mean1, cov1 = self.derive_mean_cov(images_a, batch_size)
         mean2, cov2 = self.derive_mean_cov(images_b, batch_size)
         fc = frechet_coefficient(mean1, cov1, mean2, cov2)
@@ -127,16 +235,71 @@ class ImageSimilarityMetrics(PretrainedModelWrapper):
     def calculate_hellinger_distance(
         self, images_a: List[np.ndarray] | np.ndarray, images_b: List[np.ndarray] | np.ndarray, batch_size: int = 4
     ) -> float:
+        """
+        Calculates the Frechet coefficient between two sets of images.
+
+        ### Warning:
+            The Hellinger distance is numerically unstable when the covariance matrices are singular or poorly estimated. In such cases, the function may return NaN.
+
+
+        Args:
+            images_a (List[np.ndarray] | np.ndarray): The first set of images.
+            images_b (List[np.ndarray] | np.ndarray): The second set of images.
+            batch_size (int, optional): The batch size for computing mean and covariance. Defaults to 4.
+
+        Returns:
+            float: The calculated Hellinger distance.
+        """
         mean1, cov1 = self.derive_mean_cov(images_a, batch_size)
         mean2, cov2 = self.derive_mean_cov(images_b, batch_size)
         hd = hellinger_distance(mean1, cov1, mean2, cov2)
         return hd
 
     def calculate_fd_with_mean_cov(self, mean1: np.ndarray, cov1: np.ndarray, mean2: np.ndarray, cov2: np.ndarray) -> float:
+        """
+        Calculates the Fréchet Distance between two multivariate Gaussian distributions.
+
+        Parameters:
+            mean1 (np.ndarray): Mean vector of the first Gaussian distribution.
+            cov1 (np.ndarray): Covariance matrix of the first Gaussian distribution.
+            mean2 (np.ndarray): Mean vector of the second Gaussian distribution.
+            cov2 (np.ndarray): Covariance matrix of the second Gaussian distribution.
+
+        Returns:
+            float: The Fréchet Distance between the two distributions.
+        """
         return frechet_distance(mean1, cov1, mean2, cov2)
 
     def calculate_fc_with_mean_cov(self, mean1: np.ndarray, cov1: np.ndarray, mean2: np.ndarray, cov2: np.ndarray) -> float:
+        """
+        Calculates the Frechet coefficient using the given mean and covariance matrices.
+
+        Parameters:
+            mean1 (np.ndarray): The mean vector of the first distribution.
+            cov1 (np.ndarray): The covariance matrix of the first distribution.
+            mean2 (np.ndarray): The mean vector of the second distribution.
+            cov2 (np.ndarray): The covariance matrix of the second distribution.
+
+        Returns:
+            float: The calculated Frechet coefficient.
+
+        """
         return frechet_coefficient(mean1, cov1, mean2, cov2)
 
     def calculate_hd_with_mean_cov(self, mean1: np.ndarray, cov1: np.ndarray, mean2: np.ndarray, cov2: np.ndarray) -> float:
+        """
+        Calculates the Hellinger distance between two multivariate Gaussian distributions using their means and covariances.
+
+        ### Warning:
+            The Hellinger distance is numerically unstable when the covariance matrices are singular or poorly estimated. In such cases, the function may return NaN.
+
+        Parameters:
+            mean1 (np.ndarray): The mean of the first Gaussian distribution.
+            cov1 (np.ndarray): The covariance matrix of the first Gaussian distribution.
+            mean2 (np.ndarray): The mean of the second Gaussian distribution.
+            cov2 (np.ndarray): The covariance matrix of the second Gaussian distribution.
+
+        Returns:
+            float: The Hellinger distance between the two Gaussian distributions.
+        """
         return hellinger_distance(mean1, cov1, mean2, cov2)
