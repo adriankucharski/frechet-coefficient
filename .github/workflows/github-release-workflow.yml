@@ -11,10 +11,16 @@ on:
         description: 'Python version'
         required: true
         default: '3.10'
+      runTests:
+        description: 'Run tests'
+        required: true
+        default: 'true'
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    name: Run tests
+    if: ${{ inputs.runTests == 'true' }}
 
     strategy:
       matrix:
