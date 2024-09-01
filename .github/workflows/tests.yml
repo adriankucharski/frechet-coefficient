@@ -1,4 +1,4 @@
-name: PyPI Full Workflow
+name: Unit tests
 
 # Run this workflow on pull requests to the master branch
 on: [push]
