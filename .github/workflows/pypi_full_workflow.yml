@@ -1,12 +1,8 @@
-name: CI
+name: PyPI Full Workflow
 
 
-# On only if a release/tag is merged to master via a PR
 on:
   push:
-    branches:
-      - master
-  pull_request:
     branches:
       - master
 
@@ -87,20 +83,22 @@ jobs:
     - name: Create GitHub Release
       env:
         GITHUB_TOKEN: ${{ github.token }}
+        VERSION: ${{ github.run_id }}.${{ github.run_number }}.${{ github.run_attempt }}
       run: >-
         gh release create
-        '${{ github.event.head_commit.message }}'
+        '$VERSION'
         --repo '${{ github.repository }}'
         --notes ""
     - name: Upload artifact signatures to GitHub Release
       env:
         GITHUB_TOKEN: ${{ github.token }}
+        VERSION: ${{ github.run_id }}.${{ github.run_number }}.${{ github.run_attempt }}
       # Upload to GitHub Release using the `gh` CLI.
       # `dist/` contains the built packages, and the
       # sigstore-produced signatures and certificates.
       run: >-
         gh release upload
-        '${{ github.event.head_commit.message }}' dist/**
+        '$VERSION' dist/**
         --repo '${{ github.repository }}'
 
   publish-to-testpypi:
