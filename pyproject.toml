@@ -10,7 +10,7 @@ dependencies = [
     "imageio~=2.33.1",
     "tensorflow[and-cuda]~=2.16.1",
 ]
-requires-python = ">=3.11,<3.12"
+requires-python = ">=3.9,<3.13"
 authors = [
     {name = "Adrian Kucharski"}
 ]
