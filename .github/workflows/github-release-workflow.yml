@@ -1,13 +1,16 @@
-name: PyPI Full Workflow
+name: GitHub Release Workflow
 
-
-on:
-  push:
-    branches:
-      - master
-
-env:
-  VERSION: ${{ github.run_id }}.${{ github.run_number }}.${{ github.run_attempt }}
+on: 
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version number'
+        required: true
+        default: '0.0.0'
+      python-version:
+        description: 'Python version'
+        required: true
+        default: '3.10'
 
 jobs:
   test:
@@ -24,7 +27,7 @@ jobs:
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.python-version }}
+          pythonVersion: ${{ matrix.python-version }}
 
       - name: Install dependencies
         run: |
@@ -47,7 +50,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: "3.10"
+        python-version: ${{ inputs.pythonVersion }}
     - name: Install pypa/build
       run: >-
         python3 -m pip install build --user
@@ -88,7 +91,7 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
       run: >-
         gh release create
-        '${{ env.VERSION }}'
+        '${{ inputs.version }}'
         --repo '${{ github.repository }}'
         --notes ""
     - name: Upload artifact signatures to GitHub Release
@@ -99,52 +102,5 @@ jobs:
       # sigstore-produced signatures and certificates.
       run: >-
         gh release upload
-        '${{ env.VERSION }}' dist/**
+        '${{ inputs.version }}' dist/**
         --repo '${{ github.repository }}'
-
-  publish-to-testpypi:
-    name: Publish Python package to TestPyPI
-    if: startsWith(github.ref, 'refs/tags/')
-    needs:
-    - build
-    runs-on: ubuntu-latest
-
-    environment:
-      name: testpypi
-      url: https://test.pypi.org/p/${{ github.repository }}
-
-    permissions:
-      id-token: write
-
-    steps:
-    - name: Download all the dists
-      uses: actions/download-artifact@v3
-      with:
-        name: python-package-distributions
-        path: dist/
-    - name: Publish distribution packages to TestPyPI
-      uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        repository-url: https://test.pypi.org/legacy/
-
-  publish-to-pypi:
-    name: >-
-      Publish the distribution packages to PyPI
-    if: startsWith(github.ref, 'refs/tags/')
-    needs:
-    - build
-    runs-on: ubuntu-latest
-    environment:
-      name: pypi
-      url: https://pypi.org/p/${{ github.repository }}
-    permissions:
-      id-token: write
-
-    steps:
-    - name: Download all the dists
-      uses: actions/download-artifact@v3
-      with:
-        name: python-package-distributions
-        path: dist/
-    - name: Publish to PyPI
-      uses: pypa/gh-action-pypi-publish@release/v1
