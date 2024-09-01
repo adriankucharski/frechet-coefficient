@@ -1,10 +1,8 @@
-name: CI
+name: PyPI Full Workflow
+
 
 on:
   push:
-    branches:
-      - master
-  pull_request:
     branches:
       - master
 
@@ -58,28 +56,6 @@ jobs:
         name: python-package-distributions
         path: dist/
 
-  publish-to-pypi:
-    name: >-
-      Publish the distribution packages to PyPI
-    if: startsWith(github.ref, 'refs/tags/')
-    needs:
-    - build
-    runs-on: ubuntu-latest
-    environment:
-      name: pypi
-      url: https://pypi.org/p/${{ github.repository }}
-    permissions:
-      id-token: write
-
-    steps:
-    - name: Download all the dists
-      uses: actions/download-artifact@v3
-      with:
-        name: python-package-distributions
-        path: dist/
-    - name: Publish to PyPI
-      uses: pypa/gh-action-pypi-publish@release/v1
-  
   github-release:
     name: >-
       Sign the distribution packages with Sigstore,
@@ -107,20 +83,22 @@ jobs:
     - name: Create GitHub Release
       env:
         GITHUB_TOKEN: ${{ github.token }}
+        VERSION: ${{ github.run_id }}.${{ github.run_number }}.${{ github.run_attempt }}
       run: >-
         gh release create
-        '${{ github.ref_name }}'
+        '$VERSION'
         --repo '${{ github.repository }}'
         --notes ""
     - name: Upload artifact signatures to GitHub Release
       env:
         GITHUB_TOKEN: ${{ github.token }}
+        VERSION: ${{ github.run_id }}.${{ github.run_number }}.${{ github.run_attempt }}
       # Upload to GitHub Release using the `gh` CLI.
       # `dist/` contains the built packages, and the
       # sigstore-produced signatures and certificates.
       run: >-
         gh release upload
-        '${{ github.ref_name }}' dist/**
+        '$VERSION' dist/**
         --repo '${{ github.repository }}'
 
   publish-to-testpypi:
@@ -146,3 +124,25 @@ jobs:
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
         repository-url: https://test.pypi.org/legacy/
+
+  publish-to-pypi:
+    name: >-
+      Publish the distribution packages to PyPI
+    if: startsWith(github.ref, 'refs/tags/')
+    needs:
+    - build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/${{ github.repository }}
+    permissions:
+      id-token: write
+
+    steps:
+    - name: Download all the dists
+      uses: actions/download-artifact@v3
+      with:
+        name: python-package-distributions
+        path: dist/
+    - name: Publish to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
