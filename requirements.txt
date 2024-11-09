@@ -1,3 +1,2 @@
-numpy~=1.26.2
+tensorflow[and-cuda]~=2.18.0
 imageio~=2.33.1
-tensorflow[and-cuda]~=2.16.1
