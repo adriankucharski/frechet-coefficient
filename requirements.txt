@@ -1,2 +1,2 @@
 tensorflow[and-cuda]~=2.18.0
-imageio~=2.33.1
+imageio~=2.36.0
