@@ -13,12 +13,12 @@ class TestImageSimilarityMetrics(unittest.TestCase):
         rng = np.random.Generator(np.random.PCG64(12345))
 
         # Create dummy data for testing
-        self.images1 = rng.normal(size=(10, 299, 299, 3))  # 10 random images of size 299x299 with 3 channels
-        self.images2 = rng.normal(size=(10, 299, 299, 3))  # Another set of 10 random images
+        self.images1 = rng.uniform(size=(10, 299, 299, 3))  # 10 random images of size 299x299 with 3 channels
+        self.images2 = rng.uniform(size=(10, 299, 299, 3))  # Another set of 10 random images
 
         # Create dummy data
-        self.images3 = [rng.normal(size=(rng.integers(50, 299), rng.integers(50, 299), 3)) for _ in range(10)]
-        self.images4 = [rng.normal(size=(rng.integers(50, 299), rng.integers(50, 299), 3)) for _ in range(10)]
+        self.images3 = [rng.uniform(size=(rng.integers(50, 299), rng.integers(50, 299), 3)) for _ in range(10)]
+        self.images4 = [rng.uniform(size=(rng.integers(50, 299), rng.integers(50, 299), 3)) for _ in range(10)]
 
     def test_derive_mean_cov_ndarray(self):
         mean, cov = self.ism.derive_mean_cov(self.images1)
