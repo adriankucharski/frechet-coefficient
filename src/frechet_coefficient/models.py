@@ -77,10 +77,7 @@ class PretrainedModelWrapper:
         data = MODELS_SPEC[model.lower()]
         model: models.Model = data["model"](include_top=True, input_shape=data["input_shape"])
         latent = model.get_layer(data["layer"])
-        self.model = models.Model(
-            model.inputs,
-            latent.output,
-        )
+        self.model = models.Model(inputs=model.input, outputs=latent.output)
 
     def _preprocess(self, images: List[np.ndarray] | np.ndarray, batch_size: int = 4) -> tf.data.Dataset:
         """

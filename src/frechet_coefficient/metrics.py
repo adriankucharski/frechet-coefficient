@@ -3,7 +3,7 @@ from typing import List, Literal, Tuple
 
 import numpy as np
 
-from frechet_coefficient.models import PretrainedModelWrapper
+from .models import PretrainedModelWrapper
 
 
 def calculate_mean_cov(features: np.ndarray, dtype=np.float64) -> Tuple[np.ndarray, np.ndarray]:

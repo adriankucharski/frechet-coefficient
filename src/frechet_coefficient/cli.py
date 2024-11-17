@@ -5,8 +5,8 @@ This module contains the CLI for the Frechet Coefficient. We can calculate the F
 import argparse
 import os
 
-from frechet_coefficient.metrics import ImageSimilarityMetrics
-from frechet_coefficient.utils import crop_random_patches, load_images
+from .metrics import ImageSimilarityMetrics
+from .utils import crop_random_patches, load_images
 
 parser = argparse.ArgumentParser(
     prog="Image Similarity Metrcis CLI", description="Frechet Coefficient", formatter_class=argparse.ArgumentDefaultsHelpFormatter
