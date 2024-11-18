@@ -15,7 +15,7 @@ Frechet Coefficient is a Python package for calculating various similarity metri
 To install the package, use the following command:
 
 ```sh
-pip install frechet-coefficient # if you have TensorFlow or PyTorch and Numpy installed
+pip install frechet-coefficient # if you have TensorFlow or PyTorch
 ```
 
 ```sh
