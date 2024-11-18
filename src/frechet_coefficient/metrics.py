@@ -9,7 +9,7 @@ except ModuleNotFoundError:
     try:
         from .models_torch import PretrainedModelWrapper
     except ModuleNotFoundError:
-        raise ImportError("Could not import models from either TensorFlow or PyTorch")
+        raise ModuleNotFoundError("Could not import models from either TensorFlow or PyTorch")
 
 
 def calculate_mean_cov(features: np.ndarray, dtype=np.float64) -> Tuple[np.ndarray, np.ndarray]:
