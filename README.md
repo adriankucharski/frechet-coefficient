@@ -144,14 +144,14 @@ The Hellinger Distance is numerically unstable for small datasets. The main reas
 
 ### Models
 
-|      Model      | Input size | Output size |                Keras Applications               |                         Torchvision                        |
-|:---------------:|:----------:|:-----------:|:-----------------------------------------------:|:----------------------------------------------------------:|
-|   InceptionV3   |   299x299  |     2048    |  https://keras.io/api/applications/inceptionv3/ |    https://pytorch.org/vision/0.18/models/inception.html   |
-|    ResNet50v2   |   224x224  |     2048    |    https://keras.io/api/applications/resnet/    |                  not available in PyTorch                  |
-|     Xception    |   224x224  |     2048    |   https://keras.io/api/applications/xception/   |                  not available in PyTorch                  |
-|   DenseNet201   |   224x224  |     1920    |   https://keras.io/api/applications/densenet/   |    https://pytorch.org/vision/0.18/models/densenet.html    |
-|   ConvNeXtTiny  |   224x224  |     768     |   https://keras.io/api/applications/convnext/   |    https://pytorch.org/vision/0.18/models/convnext.html    |
-| EfficientNetV2S |   384x384  |     1280    | https://keras.io/api/applications/efficientnet/ | https://pytorch.org/vision/0.18/models/efficientnetv2.html |
+|      Model      | Input size | Output size | Parameters |                        Keras Applications                       |                                  Torchvision                                 |
+|:---------------:|:----------:|:-----------:|:----------:|:---------------------------------------------------------------:|:----------------------------------------------------------------------------:|
+|   InceptionV3   |   299x299  |     2048    |    23.9M   |  [inceptionv3](https://keras.io/api/applications/inceptionv3/)  |      [inception](https://pytorch.org/vision/0.18/models/inception.html)      |
+|    ResNet50v2   |   224x224  |     2048    |    25.6M   |       [resnet](https://keras.io/api/applications/resnet/)       |                           not available in PyTorch                           |
+|     Xception    |   224x224  |     2048    |    22.9M   |     [xception](https://keras.io/api/applications/xception/)     |                           not available in PyTorch                           |
+|   DenseNet201   |   224x224  |     1920    |    20.2M   |     [densenet](https://keras.io/api/applications/densenet/)     |       [densenet](https://pytorch.org/vision/0.18/models/densenet.html)       |
+|   ConvNeXtTiny  |   224x224  |     768     |    28.6M   |     [convnext](https://keras.io/api/applications/convnext/)     |       [convnext](https://pytorch.org/vision/0.18/models/convnext.html)       |
+| EfficientNetV2S |   384x384  |     1280    |    21.6M   | [efficientnet](https://keras.io/api/applications/efficientnet/) | [efficientnetv2](https://pytorch.org/vision/0.18/models/efficientnetv2.html) |
 
 
 ### PyTorch 
