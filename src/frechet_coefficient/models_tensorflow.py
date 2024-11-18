@@ -129,3 +129,19 @@ class PretrainedModelWrapper:
     @property
     def feature_vector_size(self) -> int:
         return self.model.output.shape[1]
+
+    def predict(self, images: List[np.ndarray] | np.ndarray, batch_size: int = 4, verbose: int = 0) -> np.ndarray:
+        """
+        Predicts the feature vectors for the input images.
+
+        Args:
+            images (List[np.ndarray] | np.ndarray): The input images for which to predict the feature vectors.
+            batch_size (int, optional): The batch size for the prediction. Defaults to 4.
+            verbose (int, optional): The verbosity level for the prediction. Defaults to 0.
+
+        Returns:
+            np.ndarray: The feature vectors for the input images.
+        """
+        xn = self._preprocess(images)
+        features = self.model.predict(xn, batch_size=batch_size, verbose=verbose)
+        return features

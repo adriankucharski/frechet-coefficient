@@ -9,8 +9,8 @@ path = "src/frechet_coefficient/__init__.py"
 name = "frechet-coefficient"
 dynamic = ["version"]
 dependencies = [
-    "tensorflow[and-cuda]~=2.18.0",
     "imageio~=2.36.0",
+    "numpy>=2.0.0"
 ]
 requires-python = ">=3.10,<3.13"
 authors = [
@@ -23,6 +23,10 @@ description = "Frechet Coefficient"
 readme = "README.md"
 license = {file = "LICENSE"}
 keywords = ["frechet", "frechet-coefficient", "fid"]
+
+[project.optional-dependencies]
+tensorflow = ["tensorflow[and-cuda]~=2.18.0"]
+torch = ["torch~=2.5.1", "torchvision", "tqdm"]
 
 [project.urls]
 Homepage = "https://github.com/adriankucharski/frechet-coefficient"

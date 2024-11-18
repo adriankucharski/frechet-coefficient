@@ -1,6 +1,6 @@
 # Frechet Coefficient
 
-Frechet Coefficient is a Python package for calculating various similarity metrics between images, including Frechet Distance, Frechet Coefficient, and Hellinger Distance. It leverages pre-trained models from TensorFlow's Keras applications to extract features from images.
+Frechet Coefficient is a Python package for calculating various similarity metrics between images, including Frechet Distance, Frechet Coefficient, and Hellinger Distance. It leverages pre-trained models from TensorFlow's Keras applications and Torchvision to extract features from images.
 
 ## Table of Contents
 
@@ -15,13 +15,23 @@ Frechet Coefficient is a Python package for calculating various similarity metri
 To install the package, use the following command:
 
 ```sh
-pip install frechet-coefficient
+pip install frechet-coefficient # if you have TensorFlow or PyTorch
+```
+
+```sh
+pip install frechet-coefficient[tensorflow] # for TensorFlow support
+```
+
+```sh
+pip install frechet-coefficient[torch] # for PyTorch support
 ```
 
 Requirements:
 - Python 3.10-3.12
-- TensorFlow 2.18.*
+- TensorFlow 2.18.* OR PyTorch 2.5.*
 - imageio 2.36.*
+- numpy >= 2.0.0
+
 
 ## Usage
 
@@ -135,13 +145,24 @@ The Hellinger Distance is numerically unstable for small datasets. The main reas
 
 ### Models
 
-- `inceptionv3` - Input size: 299x299, Output size: 2048 - https://keras.io/api/applications/inceptionv3/
-- `resnet50v2` - Input size: 224x224, Output size: 2048 - https://keras.io/api/applications/resnet/
-- `xception` - Input size: 224x224, Output size: 2048 - https://keras.io/api/applications/xception/
-- `densenet201` - Input size: 224x224, Output size: 1920 - https://keras.io/api/applications/densenet/
-- `convnexttiny` - Input size: 224x224, Output size: 768 - https://keras.io/api/applications/convnext/
-- `efficientnetv2s` - Input size: 384x384, Output size: 1280 - https://keras.io/api/applications/efficientnet/
+|      Model      | Input size | Output size | Parameters |                        Keras Applications                       |                                  Torchvision                                 |
+|:---------------:|:----------:|:-----------:|:----------:|:---------------------------------------------------------------:|:----------------------------------------------------------------------------:|
+|   InceptionV3   |   299x299  |     2048    |    23.9M   |  [inceptionv3](https://keras.io/api/applications/inceptionv3/)  |      [inception](https://pytorch.org/vision/0.18/models/inception.html)      |
+|    ResNet50v2   |   224x224  |     2048    |    25.6M   |       [resnet](https://keras.io/api/applications/resnet/)       |                           not available in PyTorch                           |
+|     Xception    |   224x224  |     2048    |    22.9M   |     [xception](https://keras.io/api/applications/xception/)     |                           not available in PyTorch                           |
+|   DenseNet201   |   224x224  |     1920    |    20.2M   |     [densenet](https://keras.io/api/applications/densenet/)     |       [densenet](https://pytorch.org/vision/0.18/models/densenet.html)       |
+|   ConvNeXtTiny  |   224x224  |     768     |    28.6M   |     [convnext](https://keras.io/api/applications/convnext/)     |       [convnext](https://pytorch.org/vision/0.18/models/convnext.html)       |
+| EfficientNetV2S |   384x384  |     1280    |    21.6M   | [efficientnet](https://keras.io/api/applications/efficientnet/) | [efficientnetv2](https://pytorch.org/vision/0.18/models/efficientnetv2.html) |
 
+
+### PyTorch 
+To set PyTorch device, use the following code:
+```python
+import os
+os.environ["FRECHET_COEFFICIENT_DEVICE_TORCH"] = "cuda" # or "cpu"
+
+# import the package after setting the device
+```
 
 ## Features
 
