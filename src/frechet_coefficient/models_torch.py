@@ -106,7 +106,16 @@ class PretrainedModelWrapper:
 
     @property
     def feature_vector_size(self) -> int:
-        return self.model.output_size
+        """
+        Returns the size of the feature vector.
+
+        Returns:
+            int: The size of the feature vector.
+        """
+        temp = torch.zeros(1, 3, 299, 299, dtype=torch.float32, device=self.device)
+        with torch.no_grad():
+            feature = self.model(temp)
+        return feature[self.layer].shape[1]
 
     def _preprocess(self, images: List[np.ndarray] | np.ndarray, verbose: int = 0) -> np.ndarray:
         """
