@@ -3,7 +3,13 @@ from typing import List, Literal, Tuple
 
 import numpy as np
 
-from .models import PretrainedModelWrapper
+try:
+    from .models_tensorflow import PretrainedModelWrapper
+except ImportError:
+    try:
+        from .models_torch import PretrainedModelWrapper
+    except ImportError:
+        raise ImportError("Could not import models from either TensorFlow or PyTorch")
 
 
 def calculate_mean_cov(features: np.ndarray, dtype=np.float64) -> Tuple[np.ndarray, np.ndarray]:
@@ -188,8 +194,7 @@ class ImageSimilarityMetrics(PretrainedModelWrapper):
         Returns:
             Tuple[np.ndarray, np.ndarray]: A tuple containing the mean and covariance of the features extracted from the images.
         """
-        images = self._preprocess(images, batch_size)
-        features = self.model.predict(images, batch_size=batch_size, verbose=self.verbose)
+        features = self.predict(images, batch_size=batch_size, verbose=self.verbose)
         return calculate_mean_cov(features)
 
     def calculate_frechet_distance(

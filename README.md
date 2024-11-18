@@ -15,13 +15,22 @@ Frechet Coefficient is a Python package for calculating various similarity metri
 To install the package, use the following command:
 
 ```sh
-pip install frechet-coefficient
+pip install frechet-coefficient # if you have TensorFlow or PyTorch and Numpy installed
+```
+
+```sh
+pip install frechet-coefficient[tensorflow] # for TensorFlow support
+```
+
+```sh
+pip install frechet-coefficient[torch] # for PyTorch support
 ```
 
 Requirements:
 - Python 3.10-3.12
-- TensorFlow 2.18.*
+- TensorFlow 2.18.* OR PyTorch 2.5.*
 - imageio 2.36.*
+
 
 ## Usage
 
@@ -142,6 +151,13 @@ The Hellinger Distance is numerically unstable for small datasets. The main reas
 - `convnexttiny` - Input size: 224x224, Output size: 768 - https://keras.io/api/applications/convnext/
 - `efficientnetv2s` - Input size: 384x384, Output size: 1280 - https://keras.io/api/applications/efficientnet/
 
+
+### PyTorch 
+To set PyTorch device, use the following code:
+```python
+import os
+os.environ["FRECHET_COEFFICIENT_DEVICE_TORCH"] = "cuda" # or "cpu"
+```
 
 ## Features
 
