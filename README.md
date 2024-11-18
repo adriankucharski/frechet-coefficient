@@ -1,6 +1,6 @@
 # Frechet Coefficient
 
-Frechet Coefficient is a Python package for calculating various similarity metrics between images, including Frechet Distance, Frechet Coefficient, and Hellinger Distance. It leverages pre-trained models from TensorFlow's Keras applications to extract features from images.
+Frechet Coefficient is a Python package for calculating various similarity metrics between images, including Frechet Distance, Frechet Coefficient, and Hellinger Distance. It leverages pre-trained models from TensorFlow's Keras applications and Torchvision to extract features from images.
 
 ## Table of Contents
 
@@ -144,12 +144,14 @@ The Hellinger Distance is numerically unstable for small datasets. The main reas
 
 ### Models
 
-- `inceptionv3` - Input size: 299x299, Output size: 2048 - https://keras.io/api/applications/inceptionv3/ | https://pytorch.org/vision/0.18/models/inception.html
-- `resnet50v2` - Input size: 224x224, Output size: 2048 - https://keras.io/api/applications/resnet/ | <span style="color:red"> not available in PyTorch </span>
-- `xception` - Input size: 224x224, Output size: 2048 - https://keras.io/api/applications/xception/ | <span style="color:red"> not available in PyTorch </span>
-- `densenet201` - Input size: 224x224, Output size: 1920 - https://keras.io/api/applications/densenet/ | https://pytorch.org/vision/0.18/models/densenet.html
-- `convnexttiny` - Input size: 224x224, Output size: 768 - https://keras.io/api/applications/convnext/ | https://pytorch.org/vision/0.18/models/convnext.html
-- `efficientnetv2s` - Input size: 384x384, Output size: 1280 - https://keras.io/api/applications/efficientnet/ | https://pytorch.org/vision/0.18/models/efficientnetv2.html
+|      Model      | Input size | Output size |                Keras Applications               |                         Torchvision                        |
+|:---------------:|:----------:|:-----------:|:-----------------------------------------------:|:----------------------------------------------------------:|
+|   InceptionV3   |   299x299  |     2048    |  https://keras.io/api/applications/inceptionv3/ |    https://pytorch.org/vision/0.18/models/inception.html   |
+|    ResNet50v2   |   224x224  |     2048    |    https://keras.io/api/applications/resnet/    |                  not available in PyTorch                  |
+|     Xception    |   224x224  |     2048    |   https://keras.io/api/applications/xception/   |                  not available in PyTorch                  |
+|   DenseNet201   |   224x224  |     1920    |   https://keras.io/api/applications/densenet/   |    https://pytorch.org/vision/0.18/models/densenet.html    |
+|   ConvNeXtTiny  |   224x224  |     768     |   https://keras.io/api/applications/convnext/   |    https://pytorch.org/vision/0.18/models/convnext.html    |
+| EfficientNetV2S |   384x384  |     1280    | https://keras.io/api/applications/efficientnet/ | https://pytorch.org/vision/0.18/models/efficientnetv2.html |
 
 
 ### PyTorch 
