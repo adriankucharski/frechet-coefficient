@@ -67,7 +67,7 @@ MODELS_SPEC = {
         "model": lambda: not_implemented("resnet50v2"),
     },
     "xception": {
-        "model": lambda: not_implemented("resnet50v2"),
+        "model": lambda: not_implemented("xception"),
     },
 }
 

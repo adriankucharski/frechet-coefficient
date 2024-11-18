@@ -144,12 +144,12 @@ The Hellinger Distance is numerically unstable for small datasets. The main reas
 
 ### Models
 
-- `inceptionv3` - Input size: 299x299, Output size: 2048 - https://keras.io/api/applications/inceptionv3/
-- `resnet50v2` - Input size: 224x224, Output size: 2048 - https://keras.io/api/applications/resnet/
-- `xception` - Input size: 224x224, Output size: 2048 - https://keras.io/api/applications/xception/
-- `densenet201` - Input size: 224x224, Output size: 1920 - https://keras.io/api/applications/densenet/
-- `convnexttiny` - Input size: 224x224, Output size: 768 - https://keras.io/api/applications/convnext/
-- `efficientnetv2s` - Input size: 384x384, Output size: 1280 - https://keras.io/api/applications/efficientnet/
+- `inceptionv3` - Input size: 299x299, Output size: 2048 - https://keras.io/api/applications/inceptionv3/ | https://pytorch.org/vision/0.18/models/inception.html
+- `resnet50v2` - Input size: 224x224, Output size: 2048 - https://keras.io/api/applications/resnet/ | <span style="color:red"> not available in PyTorch </span>
+- `xception` - Input size: 224x224, Output size: 2048 - https://keras.io/api/applications/xception/ | <span style="color:red"> not available in PyTorch </span>
+- `densenet201` - Input size: 224x224, Output size: 1920 - https://keras.io/api/applications/densenet/ | https://pytorch.org/vision/0.18/models/densenet.html
+- `convnexttiny` - Input size: 224x224, Output size: 768 - https://keras.io/api/applications/convnext/ | https://pytorch.org/vision/0.18/models/convnext.html
+- `efficientnetv2s` - Input size: 384x384, Output size: 1280 - https://keras.io/api/applications/efficientnet/ | https://pytorch.org/vision/0.18/models/efficientnetv2.html
 
 
 ### PyTorch 
@@ -157,6 +157,8 @@ To set PyTorch device, use the following code:
 ```python
 import os
 os.environ["FRECHET_COEFFICIENT_DEVICE_TORCH"] = "cuda" # or "cpu"
+
+# import the package after setting the device
 ```
 
 ## Features
