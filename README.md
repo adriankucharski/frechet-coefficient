@@ -30,6 +30,7 @@ Requirements:
 - Python 3.10-3.12
 - TensorFlow 2.18.* OR PyTorch 2.5.*
 - imageio 2.36.*
+- numpy >= 2.0.0
 
 
 ## Usage
