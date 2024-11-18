@@ -2,10 +2,10 @@ __version__ = "2.0.0"
 
 try:
     import tensorflow
-except ImportError:
+except ImportError | ModuleNotFoundError:
     try:
         import torch
-    except ImportError:
+    except ImportError | ModuleNotFoundError:
         raise ImportError(
             "Neither TensorFlow nor PyTorch is installed. Please install the package with `pip install frechet-coefficient[tensorflow]`, or `pip install frechet-coefficient[torch]`."
         )

@@ -5,10 +5,10 @@ import numpy as np
 
 try:
     from .models_tensorflow import PretrainedModelWrapper
-except ImportError:
+except ImportError | ModuleNotFoundError:
     try:
         from .models_torch import PretrainedModelWrapper
-    except ImportError:
+    except ImportError | ModuleNotFoundError:
         raise ImportError("Could not import models from either TensorFlow or PyTorch")
 
 
