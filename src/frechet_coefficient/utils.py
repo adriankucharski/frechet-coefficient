@@ -1,7 +1,7 @@
 import os
 import logging
 from glob import glob
-from typing import List, Tuple
+from typing import List, Tuple, Union
 
 import imageio.v3 as iio
 import numpy as np
@@ -42,7 +42,7 @@ def crop_random_patches(
     images: List[np.ndarray],
     size: Tuple[int, int],
     num_of_patch: int,
-    seed: int | None = None,
+    seed: Union[int, None] = None,
 ) -> np.ndarray:
     """
     Crop random patches from a list of images.

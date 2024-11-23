@@ -7,7 +7,7 @@ import torch
 import numpy as np
 import tqdm
 
-from typing import List, Literal
+from typing import List, Literal, Union
 
 
 def not_implemented(name: str):
@@ -117,7 +117,7 @@ class PretrainedModelWrapper:
             feature = self.model(temp)
         return feature[self.layer].shape[1]
 
-    def _preprocess(self, images: List[np.ndarray] | np.ndarray, verbose: int = 0) -> np.ndarray:
+    def _preprocess(self, images: Union[List[np.ndarray], np.ndarray], verbose: int = 0) -> np.ndarray:
         """
         Preprocesses the input images.
 
@@ -142,7 +142,7 @@ class PretrainedModelWrapper:
 
         return np.array(xn, dtype=np.float32)
 
-    def predict(self, images: List[np.ndarray] | np.ndarray, batch_size: int = 4, verbose: int = 0) -> np.ndarray:
+    def predict(self, images: Union[List[np.ndarray], np.ndarray], batch_size: int = 4, verbose: int = 0) -> np.ndarray:
         """
         Predicts the feature vectors for the input images.
 

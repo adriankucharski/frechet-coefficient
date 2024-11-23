@@ -3,7 +3,7 @@ import os
 # Disable TensorFlow logging
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 
-from typing import List, Literal
+from typing import List, Literal, Union
 
 import numpy as np
 import tensorflow as tf
@@ -79,7 +79,7 @@ class PretrainedModelWrapper:
         latent = model.get_layer(data["layer"])
         self.model = models.Model(inputs=model.input, outputs=latent.output)
 
-    def _preprocess(self, images: List[np.ndarray] | np.ndarray, batch_size: int = 4) -> tf.data.Dataset:
+    def _preprocess(self, images: Union[List[np.ndarray], np.ndarray], batch_size: int = 4) -> tf.data.Dataset:
         """
         Preprocesses the input images for the model.
 
@@ -130,7 +130,7 @@ class PretrainedModelWrapper:
     def feature_vector_size(self) -> int:
         return self.model.output.shape[1]
 
-    def predict(self, images: List[np.ndarray] | np.ndarray, batch_size: int = 4, verbose: int = 0) -> np.ndarray:
+    def predict(self, images: Union[List[np.ndarray], np.ndarray], batch_size: int = 4, verbose: int = 0) -> np.ndarray:
         """
         Predicts the feature vectors for the input images.
 
