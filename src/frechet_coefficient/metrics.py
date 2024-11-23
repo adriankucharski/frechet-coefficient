@@ -1,5 +1,5 @@
 import logging
-from typing import List, Literal, Tuple
+from typing import List, Literal, Tuple, Union
 
 import numpy as np
 
@@ -183,7 +183,7 @@ class ImageSimilarityMetrics(PretrainedModelWrapper):
         PretrainedModelWrapper.__init__(self, model)
         self.verbose = verbose
 
-    def derive_mean_cov(self, images: List[np.ndarray] | np.ndarray, batch_size: int = 4) -> Tuple[np.ndarray, np.ndarray]:
+    def derive_mean_cov(self, images: Union[List[np.ndarray], np.ndarray], batch_size: int = 4) -> Tuple[np.ndarray, np.ndarray]:
         """
         Calculates the mean and covariance of the given images.
 
@@ -198,7 +198,7 @@ class ImageSimilarityMetrics(PretrainedModelWrapper):
         return calculate_mean_cov(features)
 
     def calculate_frechet_distance(
-        self, images_a: List[np.ndarray] | np.ndarray, images_b: List[np.ndarray] | np.ndarray, batch_size: int = 4
+        self, images_a: Union[List[np.ndarray], np.ndarray], images_b: Union[List[np.ndarray], np.ndarray], batch_size: int = 4
     ) -> float:
         """
         Calculates the Frechet distance between two sets of images.
@@ -218,7 +218,7 @@ class ImageSimilarityMetrics(PretrainedModelWrapper):
         return fd
 
     def calculate_frechet_coefficient(
-        self, images_a: List[np.ndarray] | np.ndarray, images_b: List[np.ndarray] | np.ndarray, batch_size: int = 4
+        self, images_a: Union[List[np.ndarray], np.ndarray], images_b: Union[List[np.ndarray], np.ndarray], batch_size: int = 4
     ) -> float:
         """
         Calculates the Frechet coefficient between two sets of images.
@@ -238,7 +238,7 @@ class ImageSimilarityMetrics(PretrainedModelWrapper):
         return fc
 
     def calculate_hellinger_distance(
-        self, images_a: List[np.ndarray] | np.ndarray, images_b: List[np.ndarray] | np.ndarray, batch_size: int = 4
+        self, images_a: Union[List[np.ndarray], np.ndarray], images_b: Union[List[np.ndarray], np.ndarray], batch_size: int = 4
     ) -> float:
         """
         Calculates the Frechet coefficient between two sets of images.
