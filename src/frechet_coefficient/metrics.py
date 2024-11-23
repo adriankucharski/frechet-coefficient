@@ -151,7 +151,7 @@ def hellinger_distance(mean1: np.ndarray, cov1: np.ndarray, mean2: np.ndarray, c
     det2 = np.linalg.det(cov2)
     det3 = np.linalg.det(sum_of_sigma / 2)
 
-    term1 = (det1**0.25 * det2**0.25) / (det3**0.5)
+    term1 = (det1**0.25 * det2**0.25) / (det3**0.5 + 1e-7)
     term2 = (mean1 - mean2) @ np.linalg.pinv(sum_of_sigma / 2) @ (mean1 - mean2) / 0.125
 
     return 1 - np.real(term1) * np.real(np.exp(-term2))

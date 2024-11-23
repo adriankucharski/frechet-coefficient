@@ -11,3 +11,9 @@ class TestImports(unittest.TestCase):
         # This test will fail if torch is imported
         with self.assertRaises(ModuleNotFoundError):
             import torch
+
+    def test_import_imageio(self):
+        try:
+            import imageio.v3
+        except ModuleNotFoundError:
+            self.fail("imageio not imported")
