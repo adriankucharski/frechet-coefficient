@@ -63,15 +63,14 @@ def main() -> None:
         images1 = crop_random_patches(images1, (args.patch_size, args.patch_size), args.num_of_patch)
         images2 = crop_random_patches(images2, (args.patch_size, args.patch_size), args.num_of_patch)
 
-    match args.metric:
-        case "fd":
-            metric = ism.calculate_frechet_distance(images1, images2, args.batch_size)
-        case "fc":
-            metric = ism.calculate_frechet_coefficient(images1, images2, args.batch_size)
-        case "hd":
-            metric = ism.calculate_hellinger_distance(images1, images2, args.batch_size)
-        case _:
-            raise ValueError(f"Invalid metric {args.metric}")
+    if args.metric == "fd":
+        metric = ism.calculate_frechet_distance(images1, images2, args.batch_size)
+    elif args.metric == "fc":
+        metric = ism.calculate_frechet_coefficient(images1, images2, args.batch_size)
+    elif args.metric == "hd":
+        metric = ism.calculate_hellinger_distance(images1, images2, args.batch_size)
+    else:
+        raise ValueError(f"Invalid metric {args.metric}")
 
     print(f"Calculated {args.metric}: {metric}")
 
