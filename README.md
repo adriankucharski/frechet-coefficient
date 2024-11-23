@@ -27,10 +27,10 @@ pip install frechet-coefficient[torch] # for PyTorch support
 ```
 
 Requirements:
-- Python 3.10-3.12
-- TensorFlow 2.18.* OR PyTorch 2.5.*
-- imageio 2.36.*
-- numpy >= 2.0.0
+- Python 3.9-3.12
+- TensorFlow 2.18.* OR PyTorch 2.5.* # you can try older versions too
+- imageio 2.29.*
+- numpy >= 1.21.*
 
 
 ## Usage
@@ -141,7 +141,8 @@ hd = ism.calculate_hellinger_distance(images_1_patches, images_2_patches, batch_
 - `fc`: Frechet Coefficient
 - `hd`: Hellinger Distance
 
-The Hellinger Distance is numerically unstable for small datasets. The main reason is poorly estimated covariance matrices. To mitigate this issue, you can use the `--random_patches` argument to calculate metrics on random patches of images with a very high number of patches (e.g., 50000).
+The Hellinger Distance is numerically unstable for small datasets. The main reason is poorly estimated covariance matrices and calculating determinant of a large matrix (e.g. 768x768) might lead to numerical instability.
+To mitigate this issue, you can use the `--random_patches` argument to calculate metrics on random patches of images with a very high number of patches (e.g., 50000).
 
 ### Models
 
