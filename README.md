@@ -28,9 +28,9 @@ pip install frechet-coefficient[torch] # for PyTorch support
 
 Requirements:
 - Python 3.9-3.12
-- TensorFlow 2.18.* OR PyTorch 2.5.* # you can try older versions too
-- imageio 2.29.*
-- numpy >= 1.21.*
+- TensorFlow >= 2.16.0 OR PyTorch >= 2.0.0 with Torchvision >= 0.15.0 # you can try older versions too
+- imageio >= 2.29.0
+- numpy >= 1.21.0
 
 
 ## Usage
@@ -148,12 +148,12 @@ To mitigate this issue, you can use the `--random_patches` argument to calculate
 
 |      Model      | Input size | Output size | Parameters |                        Keras Applications                       |                                  Torchvision                                 |
 |:---------------:|:----------:|:-----------:|:----------:|:---------------------------------------------------------------:|:----------------------------------------------------------------------------:|
-|   InceptionV3   |   299x299  |     2048    |    23.9M   |  [inceptionv3](https://keras.io/api/applications/inceptionv3/)  |      [inception](https://pytorch.org/vision/0.18/models/inception.html)      |
+|   InceptionV3   |   299x299  |     2048    |    23.9M   |  [inceptionv3](https://keras.io/api/applications/inceptionv3/)  |      [inception](https://pytorch.org/vision/0.20/models/inception.html)      |
 |    ResNet50v2   |   224x224  |     2048    |    25.6M   |       [resnet](https://keras.io/api/applications/resnet/)       |                           not available in PyTorch                           |
 |     Xception    |   224x224  |     2048    |    22.9M   |     [xception](https://keras.io/api/applications/xception/)     |                           not available in PyTorch                           |
-|   DenseNet201   |   224x224  |     1920    |    20.2M   |     [densenet](https://keras.io/api/applications/densenet/)     |       [densenet](https://pytorch.org/vision/0.18/models/densenet.html)       |
-|   ConvNeXtTiny  |   224x224  |     768     |    28.6M   |     [convnext](https://keras.io/api/applications/convnext/)     |       [convnext](https://pytorch.org/vision/0.18/models/convnext.html)       |
-| EfficientNetV2S |   384x384  |     1280    |    21.6M   | [efficientnet](https://keras.io/api/applications/efficientnet/) | [efficientnetv2](https://pytorch.org/vision/0.18/models/efficientnetv2.html) |
+|   DenseNet201   |   224x224  |     1920    |    20.2M   |     [densenet](https://keras.io/api/applications/densenet/)     |       [densenet](https://pytorch.org/vision/0.20/models/densenet.html)       |
+|   ConvNeXtTiny  |   224x224  |     768     |    28.6M   |     [convnext](https://keras.io/api/applications/convnext/)     |       [convnext](https://pytorch.org/vision/0.20/models/convnext.html)       |
+| EfficientNetV2S |   384x384  |     1280    |    21.6M   | [efficientnet](https://keras.io/api/applications/efficientnet/) | [efficientnetv2](https://pytorch.org/vision/0.20/models/efficientnetv2.html) |
 
 
 ### PyTorch 
