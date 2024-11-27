@@ -1,7 +1,13 @@
 name: Unit tests
 
 # Run this workflow on pull requests to the master branch
-on: [push]
+# Run this workflow on push
+# However, ignore __init__.py files
+on:
+  push:
+    paths-ignore:
+      - '**/__init__.py'
+
 
 jobs:
   test-imports:

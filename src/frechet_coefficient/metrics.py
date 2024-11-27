@@ -183,6 +183,31 @@ class ImageSimilarityMetrics(PretrainedModelWrapper):
         PretrainedModelWrapper.__init__(self, model)
         self.verbose = verbose
 
+    def derive_features(self, images: Union[List[np.ndarray], np.ndarray], batch_size: int = 4) -> np.ndarray:
+        """
+        Extracts features from the given images.
+
+        Args:
+            images (List[np.ndarray] | np.ndarray): A list of images or a single image.
+            batch_size (int, optional): The batch size for processing the images. Defaults to 4.
+
+        Returns:
+            np.ndarray: The extracted features.
+        """
+        return self.predict(images, batch_size=batch_size, verbose=self.verbose)
+
+    def derive_mean_cov_from_features(self, features: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
+        """
+        Calculates the mean and covariance of the given features.
+
+        Args:
+            features (np.ndarray): The input features as a 2D array.
+
+        Returns:
+            Tuple[np.ndarray, np.ndarray]: A tuple containing the mean and covariance arrays.
+        """
+        return calculate_mean_cov(features)
+
     def derive_mean_cov(self, images: Union[List[np.ndarray], np.ndarray], batch_size: int = 4) -> Tuple[np.ndarray, np.ndarray]:
         """
         Calculates the mean and covariance of the given images.
