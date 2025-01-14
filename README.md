@@ -175,7 +175,20 @@ os.environ["FRECHET_COEFFICIENT_DEVICE_TORCH"] = "cuda" # or "cpu"
 
 If you use this package in your research, please consider citing the following paper:
 
-- not available yet
+```
+@article{KUCHARSKI2025129422,
+title = {Towards improved evaluation of generative neural networks: The Fréchet Coefficient},
+journal = {Neurocomputing},
+pages = {129422},
+year = {2025},
+issn = {0925-2312},
+doi = {https://doi.org/10.1016/j.neucom.2025.129422},
+url = {https://www.sciencedirect.com/science/article/pii/S0925231225000943},
+author = {Adrian Kucharski and Anna Fabijańska},
+keywords = {Generative adversarial networks, Performance evaluation, Metric, Fréchet Coefficient, Fréchet Inception Distance},
+abstract = {Generative adversarial networks (GANs) have shown remarkable capabilities for synthesizing realistic images and movies. However, evaluating the performance of GANs remains a challenging task. Specifically, existing metrics dedicated to this task, such as the Fréchet Inception Distance (FID), lack interpretability since they provide scores that are not bound to any range. This paper introduces the Fréchet Coefficient (FC), the novel metric that addresses the challenge by providing a clear performance score between 0 and 1, thus making interpreting and comparing results easier. Also, FC can use any convolutional neural network as a feature extractor, offering flexibility and potential for customization. We evaluate the performance of FC and benchmark it against FID on five diverse image datasets within the image-to-image translation framework. These datasets include medical, natural scene, and face images where GANs are tasked with synthesizing images from semantic segmentation maps. We also test FC’s performance under various image distortions. Experimental results demonstrate that FC is a reliable metric for evaluating GAN performance. It consistently outperforms FID regarding interpretability, making it a valuable tool for researchers and practitioners working with GANs.}
+}
+```
 
 ## License
 
