@@ -6,12 +6,37 @@ from torchvision import transforms, models
 import torch
 import numpy as np
 import tqdm
+from transformers import AutoImageProcessor, AutoModel
+import PIL.Image
 
 from typing import List, Literal, Union
 
 
 def not_implemented(name: str):
     raise NotImplementedError(f"{name} is not implemented")
+
+
+class DinoModelWrapper(torch.nn.Module):
+    def __init__(self, name: str = "facebook/dinov2-small"):
+        super(DinoModelWrapper, self).__init__()
+        self.dino = AutoModel.from_pretrained(name)
+
+    def forward(self, x):
+        outputs = self.dino(x)
+        return outputs.pooler_output
+
+
+def dinov2_preprocess(name: str = "facebook/dinov2-small") -> torch.Tensor:
+    processor = AutoImageProcessor.from_pretrained(name)
+
+    def wrapper(image: np.ndarray) -> torch.Tensor:
+        # use cpu for preprocessing
+        with torch.no_grad():
+            pil_image = PIL.Image.fromarray(image)
+            image = processor(images=pil_image, return_tensors="pt")["pixel_values"]
+            return image[0]
+
+    return wrapper
 
 
 MODELS_SPEC = {
@@ -69,13 +94,24 @@ MODELS_SPEC = {
     "xception": {
         "model": lambda: not_implemented("xception"),
     },
+    "dinov2": {
+        "model": lambda: DinoModelWrapper("facebook/dinov2-small"),
+        "layer": None,
+        "preprocess": dinov2_preprocess("facebook/dinov2-small"),
+    },
 }
 
 
 class PretrainedModelWrapper:
     def __init__(
         self,
-        model: Literal["inceptionv3", "convnexttiny", "efficientnetv2s", "densenet201", "resnet50v2", "xception"] = "inceptionv3",
+        model: Literal[
+            "inceptionv3",
+            "convnexttiny",
+            "efficientnetv2s",
+            "densenet201",
+            "dinov2",
+        ] = "inceptionv3",
     ) -> None:
         """
         Initializes the model object.
@@ -97,9 +133,12 @@ class PretrainedModelWrapper:
         model: torch.nn.Module = data["model"]().to(self.device)
         self.layer: str = data["layer"]
 
-        # Create the feature extractor model
-        self.model: torch.nn.Module = create_feature_extractor(model, [self.layer])
-        self.model.eval()
+        if self.layer is not None:
+            # Create the feature extractor model
+            self.model: torch.nn.Module = create_feature_extractor(model, [self.layer])
+            self.model.eval()
+        else:
+            self.model = model
 
         # Set the preprocessing function
         self.preprocess = data["preprocess"]
@@ -115,7 +154,11 @@ class PretrainedModelWrapper:
         temp = torch.zeros(1, 3, 299, 299, dtype=torch.float32, device=self.device)
         with torch.no_grad():
             feature = self.model(temp)
-        return feature[self.layer].shape[1]
+
+        if self.layer is None:
+            return feature.shape[1]
+        else:
+            return feature[self.layer].shape[1]
 
     def _preprocess(self, images: Union[List[np.ndarray], np.ndarray], verbose: int = 0) -> np.ndarray:
         """
@@ -162,7 +205,10 @@ class PretrainedModelWrapper:
                 x = torch.from_numpy(xn[i : i + batch_size])
                 x = x.to(self.device)
                 y = self.model(x)
-                features.append(y[self.layer].cpu().numpy())
+                if self.layer is None:
+                    features.append(y.cpu().numpy())
+                else:
+                    features.append(y[self.layer].cpu().numpy())
             features = np.concatenate(features, axis=0).squeeze()
 
         return features

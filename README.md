@@ -154,7 +154,7 @@ To mitigate this issue, you can use the `--random_patches` argument to calculate
 |   DenseNet201   |   224x224  |     1920    |    20.2M   |     [densenet](https://keras.io/api/applications/densenet/)     |       [densenet](https://pytorch.org/vision/0.20/models/densenet.html)       |
 |   ConvNeXtTiny  |   224x224  |     768     |    28.6M   |     [convnext](https://keras.io/api/applications/convnext/)     |       [convnext](https://pytorch.org/vision/0.20/models/convnext.html)       |
 | EfficientNetV2S |   384x384  |     1280    |    21.6M   | [efficientnet](https://keras.io/api/applications/efficientnet/) | [efficientnetv2](https://pytorch.org/vision/0.20/models/efficientnetv2.html) |
-
+|    DINOv2-S     |   224x224  |     384     |    21.0M   |                           not available                         |       [dinov2](https://huggingface.co/docs/transformers/model_doc/dinov2)    |
 
 ### PyTorch 
 To set PyTorch device, use the following code:
