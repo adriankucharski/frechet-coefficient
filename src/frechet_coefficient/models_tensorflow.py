@@ -9,6 +9,11 @@ import numpy as np
 import tensorflow as tf
 from keras import applications, models
 
+
+def not_implemented(name: str):
+    raise NotImplementedError(f"{name} is not implemented")
+
+
 MODELS_SPEC = {
     "inceptionv3": {
         "model": applications.InceptionV3,
@@ -45,6 +50,9 @@ MODELS_SPEC = {
         "input_shape": (384, 384, 3),
         "layer": "avg_pool",
         "preprocess": applications.efficientnet.preprocess_input,
+    },
+    "dinov2": {
+        "model": lambda: not_implemented("DINOv2"),
     },
 }
 

@@ -26,7 +26,7 @@ keywords = ["frechet", "frechet-coefficient", "fid"]
 
 [project.optional-dependencies]
 tensorflow = ["tensorflow[and-cuda]>=2.16.0"]
-torch = ["torch>=2.0.0", "torchvision>=0.15", "tqdm"]
+torch = ["torch>=2.0.0", "torchvision>=0.15", "tqdm", "transformers"]
 
 [project.urls]
 Homepage = "https://github.com/adriankucharski/frechet-coefficient"
