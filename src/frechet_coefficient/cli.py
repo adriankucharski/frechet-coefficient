@@ -18,7 +18,7 @@ parser.add_argument(
     type=str,
     default="inceptionv3",
     help="Pretrained model to use",
-    choices=["inceptionv3", "resnet50v2", "xception", "densenet201", "convnexttiny", "efficientnetv2s"],
+    choices=["inceptionv3", "resnet50v2", "xception", "densenet201", "convnexttiny", "efficientnetv2s", "dinov2"],
 )
 parser.add_argument(
     "--metric",
