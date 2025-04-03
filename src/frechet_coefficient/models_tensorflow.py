@@ -120,6 +120,8 @@ class PretrainedModelWrapper:
 
         def apply(x: tf.Tensor) -> tf.Tensor:
             x = tf.clip_by_value(x * 255, 0, 255)
+            if len(x.shape) == 3:
+                x = tf.expand_dims(x, axis=-1)
             x = tf.image.grayscale_to_rgb(x) if x.shape[-1] != 3 else x
             x = resize(x)
             x = data["preprocess"](x)

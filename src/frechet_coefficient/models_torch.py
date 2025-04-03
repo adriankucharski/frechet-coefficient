@@ -181,6 +181,10 @@ class PretrainedModelWrapper:
         xn: List[np.ndarray] = []
         for i in tqdm.tqdm(range(len(images)), desc="Preprocessing images") if verbose else range(len(images)):
             image = (images[i] * 255).astype(np.uint8)
+            if image.ndim == 2:
+                image = np.stack([image] * 3, axis=-1)
+            elif image.ndim == 3 and image.shape[-1] == 1:
+                image = np.concatenate([image] * 3, axis=-1)
             xn.append(self.preprocess(image).numpy())
 
         return np.array(xn, dtype=np.float32)
