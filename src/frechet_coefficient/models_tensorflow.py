@@ -51,7 +51,7 @@ MODELS_SPEC = {
         "layer": "avg_pool",
         "preprocess": applications.efficientnet.preprocess_input,
     },
-    "dinov2": {"model": lambda: not_implemented("DINOv2"), "input_shape": None},
+    "dinov2": {"model": lambda include_top, input_shape: not_implemented("DINOv2"), "input_shape": None},
 }
 
 
